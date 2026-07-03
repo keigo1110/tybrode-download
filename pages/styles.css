@@ -1,0 +1,43 @@
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif;
+  background: radial-gradient(circle at top left, #1f2937, #111827 40%, #0b1220);
+  color: #ecf1f5;
+}
+
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 4rem 1.25rem;
+}
+
+a {
+  color: #93c5fd;
+}
+
+.download {
+  display: inline-block;
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: #22c55e;
+  color: #05120a;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+h1, h2 {
+  margin-bottom: 0.5rem;
+}
+
+ul, ol {
+  line-height: 1.7;
+}
