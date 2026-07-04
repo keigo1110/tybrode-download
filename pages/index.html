@@ -42,11 +42,16 @@
         <img src="./assets/tybrode-icon.png" width="36" height="36" alt="">
         <span>Tybrode</span>
       </a>
-      <nav class="site-nav" aria-label="Primary navigation">
-        <a href="#features">Features</a>
-        <a href="#privacy">Privacy</a>
-        <a href="#download">Download</a>
-      </nav>
+      <div class="header-actions" aria-label="Site actions">
+        <button class="language-toggle" type="button" data-language-toggle aria-label="Switch language">
+          <span data-language-label>日本語</span>
+          <span aria-hidden="true">/</span>
+          <span>EN</span>
+        </button>
+        <a class="header-download" href="https://github.com/keigo1110/Tybrode-download/releases/latest/download/Tybrode.dmg" data-i18n="headerDownload" aria-label="Download Tybrode DMG">
+          ダウンロード
+        </a>
+      </div>
     </header>
 
     <main id="main">
@@ -55,29 +60,15 @@
         <div class="hero-vignette" aria-hidden="true"></div>
         <div class="hero-inner" data-reveal>
           <img class="hero-icon" src="./assets/tybrode-icon.png" width="112" height="112" alt="">
-          <p class="eyebrow">Local-first macOS menu bar app</p>
           <h1 id="hero-title">Tybrode</h1>
-          <p class="hero-copy">あらゆる入力の粒を、静かに一日の理解へ。</p>
+          <p class="hero-copy" data-i18n="heroCopy">知識を静かに集め、あなたの思考を深めるローカルAIノート。</p>
           <div class="hero-actions" aria-label="Download actions">
             <a class="button button-primary" href="https://github.com/keigo1110/Tybrode-download/releases/latest/download/Tybrode.dmg">
-              Download DMG
+              <span aria-hidden="true">↓</span>
+              <span data-i18n="heroDownload">Tybrode.dmg をダウンロード</span>
             </a>
-            <a class="button button-secondary" href="#features">機能を見る</a>
           </div>
-          <p class="hero-note">macOS 14+ / local-only / latest public release</p>
-        </div>
-      </section>
-
-      <section class="intro-section" aria-labelledby="intro-title">
-        <div class="section-inner split">
-          <div data-reveal>
-            <p class="section-kicker">Quiet capture, clear recall</p>
-            <h2 id="intro-title">入力の断片を、プロダクトの記憶として整える。</h2>
-          </div>
-          <p class="lead" data-reveal>
-            Tybrode は許可したアプリだけを対象に、Accessibility のテキスト差分から一日の活動をまとめます。
-            クラウドに送らず、ローカルのデータベースと Ollama で完結します。
-          </p>
+          <p class="hero-note" data-i18n="heroNote">macOS 14+ / Apple Silicon & Intel</p>
         </div>
       </section>
 
@@ -85,52 +76,92 @@
         <article class="feature-panel" data-reveal>
           <div class="feature-copy">
             <span class="feature-index">01</span>
-            <h2>許可したアプリだけを見る</h2>
-            <p>
-              初期状態では何も記録しません。allowlist に追加したアプリで、明示的に Capture を開始した時だけ入力差分を扱います。
+            <h2 data-i18n="featureOneTitle">すべてローカルでキャプチャ</h2>
+            <p data-i18n="featureOneBody">
+              Web、メモ、コード、ドキュメントなど、あらゆる情報をあなたのMac上に安全に保存。クラウドに送信されることは一切ありません。
             </p>
           </div>
-          <div class="feature-visual allowlist-visual" aria-hidden="true">
-            <span></span><span></span><span></span>
+          <div class="feature-visual capture-visual" aria-hidden="true">
+            <div class="capture-sources">
+              <span></span>
+              <span>Aa</span>
+              <span>&lt;/&gt;</span>
+            </div>
+            <div class="capture-lines">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="laptop">
+              <div class="laptop-screen">
+                <img src="./assets/tybrode-icon.png" width="72" height="72" alt="">
+              </div>
+              <div class="laptop-base"></div>
+            </div>
           </div>
         </article>
 
         <article class="feature-panel" data-reveal>
           <div class="feature-copy">
             <span class="feature-index">02</span>
-            <h2>キー入力ではなく、テキスト差分を読む</h2>
-            <p>
-              イベントタップはきっかけだけに使い、内容は Accessibility のスナップショット差分から取得します。生のキー列や削除テキストは保存しません。
+            <h2 data-i18n="featureTwoTitle">許可したアプリだけを記録</h2>
+            <p data-i18n="featureTwoBody">
+              Allowlistに登録したアプリだけを対象にキャプチャ。プライベートな情報や不要なノイズを取り込みません。
             </p>
           </div>
-          <div class="feature-visual diff-visual" aria-hidden="true">
-            <span></span><span></span><span></span><span></span>
+          <div class="feature-visual privacy-visual" aria-hidden="true">
+            <div class="shield-mark"></div>
+            <div class="allowlist-card">
+              <span>github.com</span>
+              <span>developer.apple.com</span>
+              <span>notion.so</span>
+            </div>
           </div>
         </article>
 
         <article class="feature-panel" id="privacy" data-reveal>
           <div class="feature-copy">
             <span class="feature-index">03</span>
-            <h2>ローカルだけで要約する</h2>
-            <p>
-              要約先はローカルループバックの Ollama のみ。日次レポートはSQLite、JSON、Markdownとして自分のMacに残ります。
+            <h2 data-i18n="featureThreeTitle">ローカルで日次サマリーを生成</h2>
+            <p data-i18n="featureThreeBody">
+              その日に集めた情報をローカルのAIが要約。思考のつながりを見つけ、学びを定着させます。
             </p>
           </div>
-          <div class="feature-visual local-visual" aria-hidden="true">
-            <span></span><span></span><span></span>
+          <div class="feature-visual summary-visual" aria-hidden="true">
+            <div class="summary-card">
+              <div class="summary-title">Daily Summary</div>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </div>
         </article>
 
         <article class="feature-panel" data-reveal>
           <div class="feature-copy">
             <span class="feature-index">04</span>
-            <h2>検証できるプロトタイプ</h2>
-            <p>
-              privacy audit、preflight、manual QA evidence、DMG verification を用意し、ローカル専用という約束をリリース前に確認できます。
+            <h2 data-i18n="featureFourTitle">メニューバーから、すぐに記録</h2>
+            <p data-i18n="featureFourBody">
+              メニューバーからワンクリックでキャプチャ。思考を止めずに、自然に情報を積み重ねられます。
             </p>
           </div>
-          <div class="feature-visual qa-visual" aria-hidden="true">
-            <span></span><span></span><span></span>
+          <div class="feature-visual menubar-visual" aria-hidden="true">
+            <div class="mac-menubar">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="menu-popover">
+              <div class="menu-title">
+                <img src="./assets/tybrode-icon.png" width="24" height="24" alt="">
+                <span>Tybrode</span>
+              </div>
+              <span>Quick Capture</span>
+              <span>Open Dashboard</span>
+              <span>Pause Capture</span>
+            </div>
           </div>
         </article>
       </section>
@@ -138,13 +169,14 @@
       <section class="download-section" id="download" aria-labelledby="download-title">
         <div class="download-inner" data-reveal>
           <img src="./assets/tybrode-icon.png" width="96" height="96" alt="">
-          <p class="section-kicker">Latest DMG</p>
-          <h2 id="download-title">Tybrode をMacで試す</h2>
-          <p>
+          <p class="section-kicker" data-i18n="downloadKicker">Latest DMG</p>
+          <h2 id="download-title" data-i18n="downloadTitle">Tybrode をMacで試す</h2>
+          <p data-i18n="downloadBody">
             公開リリースは Tybrode-download から配布されます。インストール後、macOSの権限を許可してから allowlist と Capture を設定してください。
           </p>
           <a class="button button-primary" href="https://github.com/keigo1110/Tybrode-download/releases/latest/download/Tybrode.dmg">
-            Download Latest DMG
+            <span aria-hidden="true">↓</span>
+            <span data-i18n="downloadButton">Download Latest DMG</span>
           </a>
           <div class="download-links">
             <a href="https://github.com/keigo1110/Tybrode-download/releases">Release page</a>
@@ -155,7 +187,7 @@
     </main>
 
     <footer class="site-footer">
-      <p>Tybrode is a local-only macOS prototype. Source development remains private.</p>
+      <p data-i18n="footer">Tybrode is a local-only macOS prototype. Source development remains private.</p>
     </footer>
 
     <script src="./site.js" defer></script>
