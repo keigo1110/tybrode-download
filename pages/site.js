@@ -4,47 +4,34 @@
   const translations = {
     ja: {
       headerDownload: "ダウンロード",
-      heroCopy: "知識を静かに集め、あなたの思考を深めるローカルAIノート。",
+      heroCopy: "入力の断片から創造を広げる",
       heroDownload: "Tybrode.dmg をダウンロード",
-      heroNote: "macOS 14+ / Apple Silicon & Intel",
-      introKicker: "Quiet capture, clear recall",
-      introTitle: "入力の断片を、プロダクトの記憶として整える。",
-      introBody:
-        "Tybrode は許可したアプリだけを対象に、Accessibility のテキスト差分から一日の活動をまとめます。クラウドに送らず、ローカルのデータベースと Ollama で完結します。",
       featureOneTitle: "すべてローカルでキャプチャ",
       featureOneBody:
         "Web、メモ、コード、ドキュメントなど、あらゆる情報をあなたのMac上に安全に保存。クラウドに送信されることは一切ありません。",
-      featureTwoTitle: "許可したアプリだけを記録",
+      featureTwoTitle: "許可したサイトだけを記録",
       featureTwoBody:
-        "Allowlistに登録したアプリだけを対象にキャプチャ。プライベートな情報や不要なノイズを取り込みません。",
+        "Allowlistに登録したサイトのみを自動でキャプチャ。プライベートな情報や不要なノイズを取り込みません。",
       featureThreeTitle: "ローカルで日次サマリーを生成",
       featureThreeBody:
-        "その日に集めた情報をローカルのAIが要約。思考のつながりを見つけ、学びを定着させます。",
+        "その日に集めた情報をAIがローカルで要約。思考のつながりを見つけ、学びを定着させます。",
       featureFourTitle: "メニューバーから、すぐに記録",
       featureFourBody:
         "メニューバーからワンクリックでキャプチャ。思考を止めずに、自然に情報を積み重ねられます。",
       downloadKicker: "Latest DMG",
       downloadTitle: "Tybrode をMacで試す",
-      downloadBody:
-        "公開リリースは Tybrode-download から配布されます。インストール後、macOSの権限を許可してから allowlist と Capture を設定してください。",
       downloadButton: "Download Latest DMG",
-      footer: "Tybrode is a local-only macOS prototype. Source development remains private.",
     },
     en: {
       headerDownload: "Download",
-      heroCopy: "Gather knowledge quietly and deepen your thinking with a local AI notebook.",
+      heroCopy: "Expand creativity from fragments of input.",
       heroDownload: "Download Tybrode.dmg",
-      heroNote: "macOS 14+ / Apple Silicon & Intel",
-      introKicker: "Quiet capture, clear recall",
-      introTitle: "Turn scattered input into a product memory.",
-      introBody:
-        "Tybrode summarizes your day from Accessibility-backed text diffs in allowlisted apps only. Nothing is sent to the cloud; the database and Ollama summaries stay on your Mac.",
       featureOneTitle: "Capture everything locally",
       featureOneBody:
         "Save useful context from writing, notes, code, and documents on your Mac. Captured content is never uploaded to a cloud service.",
-      featureTwoTitle: "Record allowlisted apps only",
+      featureTwoTitle: "Record allowlisted sites only",
       featureTwoBody:
-        "Capture runs only for apps you explicitly approve. Private surfaces and irrelevant noise stay outside the record.",
+        "Only the sites you add to the allowlist are captured automatically. Private surfaces and irrelevant noise stay outside the record.",
       featureThreeTitle: "Generate daily local summaries",
       featureThreeBody:
         "A local model summarizes the day, finds connections across your work, and leaves readable JSON and Markdown reports.",
@@ -53,15 +40,11 @@
         "Capture begins from a quiet menu bar control, so you can keep thinking while Tybrode gathers context in the background.",
       downloadKicker: "Latest DMG",
       downloadTitle: "Try Tybrode on your Mac",
-      downloadBody:
-        "Public releases are distributed through Tybrode-download. After installing, grant macOS permissions, choose your allowlist, and start capture.",
       downloadButton: "Download Latest DMG",
-      footer: "Tybrode is a local-only macOS prototype. Source development remains private.",
     },
   };
 
-  const languageToggle = document.querySelector("[data-language-toggle]");
-  const languageLabel = document.querySelector("[data-language-label]");
+  const languageButtons = document.querySelectorAll("[data-language-set]");
 
   function applyLanguage(language) {
     const nextLanguage = translations[language] ? language : "ja";
@@ -72,12 +55,12 @@
         element.textContent = translations[nextLanguage][key];
       }
     });
-    if (languageLabel) {
-      languageLabel.textContent = nextLanguage === "ja" ? "日本語" : "English";
-    }
-    if (languageToggle) {
-      languageToggle.setAttribute("aria-pressed", String(nextLanguage === "en"));
-    }
+    // Highlight the active language segment so the toggle reads unambiguously.
+    languageButtons.forEach((button) => {
+      const isActive = button.getAttribute("data-language-set") === nextLanguage;
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
+    });
     try {
       window.localStorage.setItem("tybrode-language", nextLanguage);
     } catch {
@@ -85,7 +68,7 @@
     }
   }
 
-  if (languageToggle) {
+  if (languageButtons.length > 0) {
     let storedLanguage = "ja";
     try {
       storedLanguage = window.localStorage.getItem("tybrode-language") || "ja";
@@ -93,8 +76,10 @@
       storedLanguage = "ja";
     }
     applyLanguage(storedLanguage);
-    languageToggle.addEventListener("click", () => {
-      applyLanguage(document.documentElement.lang === "ja" ? "en" : "ja");
+    languageButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        applyLanguage(button.getAttribute("data-language-set"));
+      });
     });
   }
 
@@ -145,6 +130,13 @@
     return;
   }
 
+  // A cinematic accretion-disk vortex: motes ride logarithmic spiral arms and
+  // wind inward toward a bright event-horizon ring, echoing an Interstellar-style
+  // black hole. SPIRAL_WIND sets how tightly the arms coil; SQUASH tilts the disk.
+  const SPIRAL_WIND = 3.05;
+  const SQUASH = 0.8;
+  const ROT_SPEED = 0.00055;
+
   const state = {
     width: 0,
     height: 0,
@@ -152,40 +144,50 @@
     centerX: 0,
     centerY: 0,
     coreRadius: 110,
+    maxRadius: 800,
+    time: 0,
     particles: [],
     crystals: [],
     frame: 0,
     running: true,
   };
 
-  const particleCount = reduceMotion ? 180 : 520;
-  const crystalCount = reduceMotion ? 18 : 34;
+  const particleCount = reduceMotion ? 360 : 1320;
+  const crystalCount = reduceMotion ? 12 : 24;
 
-  function resetParticle(particle, randomizeRadius = true) {
-    const maxRadius = Math.max(state.width, state.height) * 0.86;
-    const minRadius = Math.max(state.coreRadius * 1.18, 90);
-    particle.radius = randomizeRadius
-      ? minRadius + Math.random() * (maxRadius - minRadius)
-      : maxRadius;
-    particle.angle = Math.random() * Math.PI * 2;
-    particle.speed = (0.65 + Math.random() * 1.45) * (Math.random() > 0.5 ? 1 : -1);
-    particle.pull = 0.52 + Math.random() * 1.25;
-    particle.size = 0.45 + Math.random() * 1.65;
-    particle.alpha = 0.2 + Math.random() * 0.58;
-    particle.tilt = Math.random() * 0.22 - 0.11;
-    particle.length = 22 + Math.random() * 86;
+  function resetParticle(particle, fromEdge = false) {
+    const min = state.coreRadius * 1.04;
+    particle.radius = fromEdge
+      ? state.maxRadius * (0.82 + Math.random() * 0.18)
+      : min + Math.random() * (state.maxRadius - min);
+    particle.phase = Math.random() * Math.PI * 2;
+    particle.inflow = 0.0014 + Math.random() * 0.0019;
+    particle.size = 0.35 + Math.random() * 1.25;
+    particle.alpha = 0.13 + Math.random() * 0.35;
+    particle.streak = 0.035 + Math.random() * 0.07;
   }
 
-  function resetCrystal(crystal) {
-    const maxRadius = Math.max(state.width, state.height) * 0.7;
-    crystal.radius = state.coreRadius * 2.15 + Math.random() * maxRadius;
-    crystal.angle = Math.random() * Math.PI * 2;
-    crystal.speed = (0.08 + Math.random() * 0.18) * (Math.random() > 0.5 ? 1 : -1);
-    crystal.pull = 0.05 + Math.random() * 0.1;
-    crystal.size = 8 + Math.random() * 21;
-    crystal.sides = Math.random() > 0.55 ? 4 : 3;
-    crystal.alpha = 0.18 + Math.random() * 0.3;
+  function resetCrystal(crystal, fromEdge = false) {
+    crystal.radius = fromEdge
+      ? state.maxRadius * (0.7 + Math.random() * 0.3)
+      : state.coreRadius * 1.8 + Math.random() * (state.maxRadius - state.coreRadius * 1.8);
+    crystal.phase = Math.random() * Math.PI * 2;
+    crystal.inflow = 0.0008 + Math.random() * 0.001;
+    crystal.size = 7 + Math.random() * 18;
+    crystal.alpha = 0.1 + Math.random() * 0.17;
     crystal.rotation = Math.random() * Math.PI * 2;
+    crystal.spin = (Math.random() - 0.5) * 0.005;
+  }
+
+  // Map a mote's polar state onto the tilted spiral plane, writing into a reused
+  // scratch point so the hot draw loop allocates nothing per frame.
+  const scratchA = { x: 0, y: 0 };
+  const scratchB = { x: 0, y: 0 };
+  function project(radius, phase, out) {
+    const angle = SPIRAL_WIND * Math.log(radius / state.coreRadius) + phase + state.time * ROT_SPEED;
+    out.x = state.centerX + Math.cos(angle) * radius;
+    out.y = state.centerY + Math.sin(angle) * radius * SQUASH;
+    return out;
   }
 
   function resize() {
@@ -198,114 +200,130 @@
     context.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
     state.centerX = state.width * 0.5;
     state.centerY = state.height * 0.42;
-    state.coreRadius = Math.max(70, Math.min(116, Math.min(state.width, state.height) * 0.12));
-    state.particles = Array.from({ length: particleCount }, () => {
-      const particle = {};
-      resetParticle(particle, true);
-      return particle;
-    });
-    state.crystals = Array.from({ length: crystalCount }, () => {
-      const crystal = {};
-      resetCrystal(crystal);
-      return crystal;
-    });
+    state.coreRadius = Math.max(74, Math.min(128, Math.min(state.width, state.height) * 0.13));
+    state.maxRadius = Math.hypot(state.width, state.height) * 0.62;
+    // Seed once; on later resizes we keep the existing field so it doesn't visibly
+    // reshuffle (e.g. when the mobile URL bar collapses and fires a resize).
+    if (state.particles.length === 0) {
+      state.particles = Array.from({ length: particleCount }, () => {
+        const particle = {};
+        resetParticle(particle, false);
+        return particle;
+      });
+      state.crystals = Array.from({ length: crystalCount }, () => {
+        const crystal = {};
+        resetCrystal(crystal, false);
+        return crystal;
+      });
+    }
     draw();
   }
 
   function drawCore() {
-    const ring = context.createRadialGradient(
-      state.centerX,
-      state.centerY,
-      state.coreRadius * 0.68,
-      state.centerX,
-      state.centerY,
-      state.coreRadius * 1.65
-    );
-    ring.addColorStop(0, "rgba(1, 0, 4, 1)");
-    ring.addColorStop(0.48, "rgba(1, 0, 4, 1)");
-    ring.addColorStop(0.64, "rgba(180, 116, 255, 0.94)");
-    ring.addColorStop(0.78, "rgba(114, 58, 210, 0.46)");
-    ring.addColorStop(1, "rgba(102, 64, 184, 0)");
+    const { centerX: cx, centerY: cy, coreRadius: r } = state;
+    // Particles/crystals leave globalAlpha at an arbitrary value; reset so the
+    // core renders at full, consistent opacity every frame (no flicker, solid horizon).
+    context.globalAlpha = 1;
 
+    // Soft outer bloom around the accretion ring.
+    const bloom = context.createRadialGradient(cx, cy, r * 0.75, cx, cy, r * 3);
+    bloom.addColorStop(0, "rgba(168, 116, 255, 0.3)");
+    bloom.addColorStop(0.4, "rgba(132, 78, 236, 0.14)");
+    bloom.addColorStop(1, "rgba(110, 64, 200, 0)");
+    context.globalCompositeOperation = "lighter";
+    context.fillStyle = bloom;
+    context.beginPath();
+    context.arc(cx, cy, r * 3, 0, Math.PI * 2);
+    context.fill();
+    context.globalCompositeOperation = "source-over";
+
+    // Bright, slightly tilted accretion ring around a dark event horizon.
+    context.save();
+    context.translate(cx, cy);
+    context.scale(1, 0.9);
+    const ring = context.createRadialGradient(0, 0, r * 0.58, 0, 0, r * 1.42);
+    ring.addColorStop(0, "rgba(2, 0, 6, 1)");
+    ring.addColorStop(0.52, "rgba(2, 0, 6, 1)");
+    ring.addColorStop(0.63, "rgba(232, 210, 255, 0.98)");
+    ring.addColorStop(0.71, "rgba(182, 124, 255, 0.9)");
+    ring.addColorStop(0.88, "rgba(118, 62, 214, 0.3)");
+    ring.addColorStop(1, "rgba(100, 62, 182, 0)");
     context.fillStyle = ring;
     context.beginPath();
-    context.arc(state.centerX, state.centerY, state.coreRadius * 1.7, 0, Math.PI * 2);
+    context.arc(0, 0, r * 1.45, 0, Math.PI * 2);
     context.fill();
 
-    context.fillStyle = "#010005";
+    // Event horizon.
+    context.fillStyle = "#020007";
     context.beginPath();
-    context.arc(state.centerX, state.centerY, state.coreRadius * 0.98, 0, Math.PI * 2);
+    context.arc(0, 0, r * 0.82, 0, Math.PI * 2);
     context.fill();
+    context.restore();
   }
 
   function drawParticle(particle) {
-    const orbitScale = 0.54 + Math.sin(particle.angle * 1.8) * 0.08 + particle.tilt;
-    const x = state.centerX + Math.cos(particle.angle) * particle.radius;
-    const y = state.centerY + Math.sin(particle.angle) * particle.radius * orbitScale;
-    const previousAngle = particle.angle - particle.speed * 0.02;
-    const previousRadius = particle.radius + particle.length;
-    const px = state.centerX + Math.cos(previousAngle) * previousRadius;
-    const py = state.centerY + Math.sin(previousAngle) * previousRadius * orbitScale;
-    const glow = Math.max(0, 1 - particle.radius / (Math.max(state.width, state.height) * 0.82));
+    const { radius } = particle;
+    const now = project(radius, particle.phase, scratchA);
+    const past = project(radius * (1 + particle.streak), particle.phase, scratchB);
+    const t = Math.min(1, Math.max(0, (radius - state.coreRadius) / (state.maxRadius - state.coreRadius)));
+    const glow = Math.pow(1 - t, 1.5);
 
-    context.globalAlpha = particle.alpha * (0.34 + glow * 0.96);
-    context.strokeStyle = glow > 0.58 ? "#e7d7ff" : "#8f5cff";
-    context.lineWidth = Math.max(0.35, particle.size * (0.45 + glow));
+    context.globalAlpha = particle.alpha * (0.32 + glow * 0.95);
+    context.strokeStyle = glow > 0.5 ? "#efe1ff" : "#9257ff";
+    context.lineWidth = Math.max(0.32, particle.size * (0.42 + glow));
     context.beginPath();
-    context.moveTo(px, py);
-    context.lineTo(x, y);
+    context.moveTo(past.x, past.y);
+    context.lineTo(now.x, now.y);
     context.stroke();
 
-    context.globalAlpha = particle.alpha * (0.5 + glow);
-    context.fillStyle = glow > 0.58 ? "#f3eaff" : "#9d63ff";
+    context.globalAlpha = particle.alpha * (0.4 + glow * 0.85);
+    context.fillStyle = glow > 0.5 ? "#f5ecff" : "#a86dff";
     context.beginPath();
-    context.arc(x, y, particle.size * (1 + glow * 2.5), 0, Math.PI * 2);
+    context.arc(now.x, now.y, particle.size * (0.5 + glow * 1.7), 0, Math.PI * 2);
     context.fill();
   }
 
+  // Wireframe octahedron drifting in the outer field.
   function drawCrystal(crystal) {
-    const orbitScale = 0.58 + Math.sin(crystal.angle * 1.4) * 0.09;
-    const x = state.centerX + Math.cos(crystal.angle) * crystal.radius;
-    const y = state.centerY + Math.sin(crystal.angle) * crystal.radius * orbitScale;
+    const p = project(crystal.radius, crystal.phase, scratchA);
+    const s = crystal.size;
     context.save();
-    context.translate(x, y);
+    context.translate(p.x, p.y);
     context.rotate(crystal.rotation);
     context.globalAlpha = crystal.alpha;
-    context.strokeStyle = "rgba(204, 168, 255, 0.92)";
-    context.fillStyle = "rgba(135, 79, 223, 0.16)";
+    context.strokeStyle = "rgba(206, 170, 255, 0.9)";
+    context.fillStyle = "rgba(138, 82, 226, 0.14)";
     context.lineWidth = 1;
     context.beginPath();
-    for (let index = 0; index < crystal.sides; index += 1) {
-      const angle = (Math.PI * 2 * index) / crystal.sides - Math.PI / 2;
-      const radius = crystal.size * (index % 2 === 0 ? 1 : 0.72);
-      const px = Math.cos(angle) * radius;
-      const py = Math.sin(angle) * radius;
-      if (index === 0) {
-        context.moveTo(px, py);
-      } else {
-        context.lineTo(px, py);
-      }
-    }
+    context.moveTo(0, -s);
+    context.lineTo(s * 0.62, 0);
+    context.lineTo(0, s);
+    context.lineTo(-s * 0.62, 0);
     context.closePath();
     context.fill();
+    context.stroke();
+    context.beginPath();
+    context.moveTo(-s * 0.62, 0);
+    context.lineTo(s * 0.62, 0);
     context.stroke();
     context.restore();
   }
 
-  function updateParticles() {
+  // dt is a frame-rate-independent multiplier (1 == a nominal 60fps frame), so
+  // the vortex drifts at the same calm speed on 60Hz and 120Hz displays alike.
+  function updateParticles(dt) {
+    state.time += dt;
     state.particles.forEach((particle) => {
-      particle.angle += (particle.speed / Math.max(particle.radius, 80)) * 10;
-      particle.radius -= particle.pull + Math.max(0, state.coreRadius * 0.008);
+      particle.radius -= (particle.radius * particle.inflow + 0.08) * dt;
       if (particle.radius < state.coreRadius * 1.02) {
-        resetParticle(particle, false);
+        resetParticle(particle, true);
       }
     });
     state.crystals.forEach((crystal) => {
-      crystal.angle += crystal.speed / Math.max(crystal.radius, 80);
-      crystal.radius -= crystal.pull;
-      crystal.rotation += crystal.speed * 0.01;
-      if (crystal.radius < state.coreRadius * 1.6) {
-        resetCrystal(crystal);
+      crystal.radius -= (crystal.radius * crystal.inflow + 0.04) * dt;
+      crystal.rotation += crystal.spin * dt;
+      if (crystal.radius < state.coreRadius * 1.5) {
+        resetCrystal(crystal, true);
       }
     });
   }
@@ -313,7 +331,7 @@
   function draw() {
     context.globalCompositeOperation = "source-over";
     context.globalAlpha = 1;
-    context.fillStyle = "#050407";
+    context.fillStyle = "#050409";
     context.fillRect(0, 0, state.width, state.height);
 
     const halo = context.createRadialGradient(
@@ -322,11 +340,12 @@
       0,
       state.centerX,
       state.centerY,
-      Math.max(state.width, state.height) * 0.56
+      state.maxRadius
     );
-    halo.addColorStop(0, "rgba(100, 55, 190, 0.24)");
-    halo.addColorStop(0.32, "rgba(92, 41, 182, 0.18)");
-    halo.addColorStop(1, "rgba(5, 4, 7, 0)");
+    halo.addColorStop(0, "rgba(104, 58, 198, 0.2)");
+    halo.addColorStop(0.32, "rgba(84, 40, 176, 0.11)");
+    halo.addColorStop(0.66, "rgba(60, 28, 134, 0.05)");
+    halo.addColorStop(1, "rgba(5, 4, 8, 0)");
     context.fillStyle = halo;
     context.fillRect(0, 0, state.width, state.height);
 
@@ -338,27 +357,67 @@
     context.globalAlpha = 1;
   }
 
-  function tick() {
+  let lastTime = 0;
+  function tick(now) {
     if (!state.running) {
       return;
     }
+    // Normalize motion to a 60fps baseline; clamp so a long pause (e.g. an
+    // inactive tab) can't produce one giant jump on resume.
+    const dt = lastTime && now ? Math.min((now - lastTime) / 16.667, 3) : 1;
+    lastTime = now || 0;
     if (!reduceMotion) {
-      updateParticles();
+      updateParticles(dt);
     }
     draw();
     state.frame = window.requestAnimationFrame(tick);
   }
 
-  document.addEventListener("visibilitychange", () => {
-    state.running = document.visibilityState === "visible";
-    if (state.running && !reduceMotion) {
+  // Animate only when it is actually worth it: motion is allowed, the tab is
+  // visible, and the hero (the only place the canvas shows) is on screen.
+  let heroInView = true;
+  function updateRunning() {
+    const shouldRun =
+      !reduceMotion && document.visibilityState === "visible" && heroInView;
+    if (shouldRun && !state.running) {
+      state.running = true;
+      lastTime = 0;
       state.frame = window.requestAnimationFrame(tick);
-    } else {
+    } else if (!shouldRun && state.running) {
+      state.running = false;
       window.cancelAnimationFrame(state.frame);
     }
-  });
+  }
 
-  window.addEventListener("resize", resize, { passive: true });
-  resize();
-  tick();
+  document.addEventListener("visibilitychange", updateRunning);
+
+  const heroSection = document.querySelector(".hero");
+  if (heroSection && "IntersectionObserver" in window) {
+    new IntersectionObserver(
+      (entries) => {
+        heroInView = entries[entries.length - 1].isIntersecting;
+        updateRunning();
+      },
+      { threshold: 0 }
+    ).observe(heroSection);
+  }
+
+  // Coalesce resize bursts (window drag, mobile URL-bar) into one update/frame.
+  let resizePending = false;
+  window.addEventListener(
+    "resize",
+    () => {
+      if (resizePending) return;
+      resizePending = true;
+      window.requestAnimationFrame(() => {
+        resizePending = false;
+        resize();
+      });
+    },
+    { passive: true }
+  );
+
+  state.running = false;
+  resize(); // paints one static frame immediately
+  updateRunning(); // starts the loop only if it should run
 })();

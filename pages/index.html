@@ -4,16 +4,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tybrode - Local-first knowledge capture for macOS</title>
-    <meta name="description" content="Tybrode は allowlist したアプリの入力差分をローカルで束ね、一日の理解へ変える macOS メニューバーアプリです。">
+    <meta name="description" content="入力の断片から創造を広げる。Tybrode は許可したサイトの記録をローカルで束ね、AI が日次サマリーを生成する macOS メニューバーアプリ。クラウドには送信しません。">
     <meta name="robots" content="index,follow">
     <meta name="application-name" content="Tybrode">
-    <meta name="theme-color" content="#050407">
-    <meta property="og:title" content="Tybrode">
-    <meta property="og:description" content="あらゆる入力の粒を、静かに一日の理解へ。Local-only macOS menu bar app.">
+    <meta name="theme-color" content="#050409">
+    <link rel="canonical" href="https://keigo1110.github.io/tybrode-download/">
+    <meta property="og:title" content="Tybrode — 入力の断片から創造を広げる">
+    <meta property="og:description" content="許可したサイトの記録をローカルで束ね、AI が日次サマリーを生成。クラウドに送らない、macOS のローカル知識キャプチャ。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://keigo1110.github.io/tybrode-download/">
-    <meta property="og:image" content="https://keigo1110.github.io/tybrode-download/assets/tybrode-icon.png">
-    <link rel="canonical" href="https://keigo1110.github.io/tybrode-download/">
+    <meta property="og:site_name" content="Tybrode">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:image" content="https://keigo1110.github.io/tybrode-download/assets/og-cover.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Tybrode — 入力の断片から創造を広げる">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tybrode — 入力の断片から創造を広げる">
+    <meta name="twitter:description" content="許可したサイトの記録をローカルで束ね、AI が日次サマリーを生成。クラウドに送らない、macOS のローカル知識キャプチャ。">
+    <meta name="twitter:image" content="https://keigo1110.github.io/tybrode-download/assets/og-cover.jpg">
     <link rel="icon" href="./assets/tybrode-icon.png">
     <link rel="apple-touch-icon" href="./assets/tybrode-icon.png">
     <link rel="stylesheet" href="./styles.css">
@@ -23,8 +32,8 @@
         "@type": "SoftwareApplication",
         "name": "Tybrode",
         "applicationCategory": "Productivity",
-        "operatingSystem": "macOS 14+",
-        "description": "Local-only macOS menu bar app for allowlist-scoped text diffs and daily summaries.",
+        "operatingSystem": "macOS 13.0+",
+        "description": "Local-only macOS menu bar app that captures text from allowlisted sites and generates on-device daily AI summaries.",
         "url": "https://keigo1110.github.io/tybrode-download/",
         "downloadUrl": "https://github.com/keigo1110/Tybrode-download/releases/latest/download/Tybrode.dmg",
         "offers": {
@@ -39,15 +48,14 @@
     <a class="skip-link" href="#main">本文へ移動</a>
     <header class="site-header" data-reveal>
       <a class="brand" href="#top" aria-label="Tybrode home">
-        <img src="./assets/tybrode-icon.png" width="36" height="36" alt="">
+        <img src="./assets/tybrode-icon.png" width="32" height="32" alt="">
         <span>Tybrode</span>
       </a>
       <div class="header-actions" aria-label="Site actions">
-        <button class="language-toggle" type="button" data-language-toggle aria-label="Switch language">
-          <span data-language-label>日本語</span>
-          <span aria-hidden="true">/</span>
-          <span>EN</span>
-        </button>
+        <div class="language-toggle" role="group" aria-label="言語 / Language">
+          <button type="button" lang="ja" data-language-set="ja" aria-label="日本語に切り替え">日本語</button>
+          <button type="button" lang="en" data-language-set="en" aria-label="Switch to English">EN</button>
+        </div>
         <a class="header-download" href="https://github.com/keigo1110/Tybrode-download/releases/latest/download/Tybrode.dmg" data-i18n="headerDownload" aria-label="Download Tybrode DMG">
           ダウンロード
         </a>
@@ -60,20 +68,61 @@
         <div class="hero-vignette" aria-hidden="true"></div>
         <div class="hero-inner" data-reveal>
           <img class="hero-icon" src="./assets/tybrode-icon.png" width="112" height="112" alt="">
-          <h1 id="hero-title">Tybrode</h1>
-          <p class="hero-copy" data-i18n="heroCopy">知識を静かに集め、あなたの思考を深めるローカルAIノート。</p>
+          <h1 id="hero-title"><span>Tybrode</span></h1>
+          <p class="hero-copy" data-i18n="heroCopy">入力の断片から創造を広げる</p>
           <div class="hero-actions" aria-label="Download actions">
             <a class="button button-primary" href="https://github.com/keigo1110/Tybrode-download/releases/latest/download/Tybrode.dmg">
-              <span aria-hidden="true">↓</span>
+              <svg class="btn-icon" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2.5v9m0 0 3.4-3.4M9 11.5 5.6 8.1M3.5 14.5h11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
               <span data-i18n="heroDownload">Tybrode.dmg をダウンロード</span>
             </a>
           </div>
-          <p class="hero-note" data-i18n="heroNote">macOS 14+ / Apple Silicon & Intel</p>
         </div>
       </section>
 
       <section class="feature-stack" id="features" aria-label="Tybrode features">
         <article class="feature-panel" data-reveal>
+          <div class="feature-visual capture-visual" aria-hidden="true">
+            <svg viewBox="0 0 440 300" role="img" aria-hidden="true">
+              <defs>
+                <radialGradient id="screenGlow" cx="50%" cy="48%" r="55%">
+                  <stop offset="0%" stop-color="rgba(160,108,255,0.55)"/>
+                  <stop offset="60%" stop-color="rgba(120,72,220,0.14)"/>
+                  <stop offset="100%" stop-color="rgba(120,72,220,0)"/>
+                </radialGradient>
+                <radialGradient id="ringGrad" cx="50%" cy="50%" r="50%">
+                  <stop offset="55%" stop-color="rgba(6,4,14,0)"/>
+                  <stop offset="72%" stop-color="rgba(196,154,255,0.95)"/>
+                  <stop offset="100%" stop-color="rgba(150,96,240,0)"/>
+                </radialGradient>
+              </defs>
+              <!-- source chips -->
+              <g class="v-chip">
+                <rect x="18" y="66" width="56" height="56" rx="15"/>
+                <rect x="18" y="126" width="56" height="56" rx="15"/>
+                <rect x="18" y="186" width="56" height="56" rx="15"/>
+              </g>
+              <!-- doc glyph -->
+              <g class="v-glyph">
+                <path d="M38 82h13l7 7v18a3 3 0 0 1-3 3H38a3 3 0 0 1-3-3V85a3 3 0 0 1 3-3Z"/>
+                <path d="M51 82v7h7"/>
+                <path d="M40 98h12M40 104h9" class="v-glyph-thin"/>
+              </g>
+              <text x="46" y="160" class="v-mono" text-anchor="middle">Aa</text>
+              <text x="46" y="220" class="v-mono v-mono-sm" text-anchor="middle">&lt;/&gt;</text>
+              <!-- connectors -->
+              <path class="v-dash" d="M78 94 C140 96 168 108 214 122"/>
+              <path class="v-dash" d="M78 154 C150 154 180 154 214 152"/>
+              <path class="v-dash" d="M78 214 C140 212 168 196 214 182"/>
+              <!-- laptop -->
+              <ellipse cx="330" cy="152" rx="96" ry="70" fill="url(#screenGlow)"/>
+              <rect x="238" y="72" width="184" height="122" rx="12" class="v-screen"/>
+              <ellipse cx="330" cy="133" rx="42" ry="42" fill="url(#ringGrad)"/>
+              <circle cx="330" cy="133" r="18" class="v-hole"/>
+              <circle cx="330" cy="133" r="30" class="v-ring"/>
+              <path class="v-deck" d="M224 194h212l14 20a6 6 0 0 1-5.4 8.6H215.4A6 6 0 0 1 210 214Z"/>
+              <rect x="308" y="208" width="44" height="6" rx="3" class="v-notch"/>
+            </svg>
+          </div>
           <div class="feature-copy">
             <span class="feature-index">01</span>
             <h2 data-i18n="featureOneTitle">すべてローカルでキャプチャ</h2>
@@ -81,63 +130,78 @@
               Web、メモ、コード、ドキュメントなど、あらゆる情報をあなたのMac上に安全に保存。クラウドに送信されることは一切ありません。
             </p>
           </div>
-          <div class="feature-visual capture-visual" aria-hidden="true">
-            <div class="capture-sources">
-              <span></span>
-              <span>Aa</span>
-              <span>&lt;/&gt;</span>
+        </article>
+
+        <article class="feature-panel" id="privacy" data-reveal>
+          <div class="feature-visual privacy-visual" aria-hidden="true">
+            <svg class="shield-svg" viewBox="0 0 132 152" role="img" aria-hidden="true">
+              <defs>
+                <linearGradient id="shieldFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="rgba(157,99,255,0.34)"/>
+                  <stop offset="100%" stop-color="rgba(20,12,40,0.5)"/>
+                </linearGradient>
+              </defs>
+              <path d="M66 8 L120 30 V74 C120 116 96 138 66 148 C36 138 12 116 12 74 V30 Z" fill="url(#shieldFill)" stroke="rgba(196,154,255,0.85)" stroke-width="2"/>
+              <path d="M45 74 l14 15 l30 -34" fill="none" stroke="rgba(226,214,255,0.96)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="allowlist-card">
+              <span><em>github.com</em><i class="tick" aria-hidden="true"></i></span>
+              <span><em>developer.apple.com</em><i class="tick" aria-hidden="true"></i></span>
+              <span><em>notion.so</em><i class="tick" aria-hidden="true"></i></span>
             </div>
-            <div class="capture-lines">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div class="laptop">
-              <div class="laptop-screen">
-                <img src="./assets/tybrode-icon.png" width="72" height="72" alt="">
-              </div>
-              <div class="laptop-base"></div>
-            </div>
+          </div>
+          <div class="feature-copy">
+            <span class="feature-index">02</span>
+            <h2 data-i18n="featureTwoTitle">許可したサイトだけを記録</h2>
+            <p data-i18n="featureTwoBody">
+              Allowlistに登録したサイトのみを自動でキャプチャ。プライベートな情報や不要なノイズを取り込みません。
+            </p>
           </div>
         </article>
 
         <article class="feature-panel" data-reveal>
-          <div class="feature-copy">
-            <span class="feature-index">02</span>
-            <h2 data-i18n="featureTwoTitle">許可したアプリだけを記録</h2>
-            <p data-i18n="featureTwoBody">
-              Allowlistに登録したアプリだけを対象にキャプチャ。プライベートな情報や不要なノイズを取り込みません。
-            </p>
-          </div>
-          <div class="feature-visual privacy-visual" aria-hidden="true">
-            <div class="shield-mark"></div>
-            <div class="allowlist-card">
-              <span>github.com</span>
-              <span>developer.apple.com</span>
-              <span>notion.so</span>
+          <div class="feature-visual summary-visual" aria-hidden="true">
+            <div class="summary-card">
+              <div class="summary-head">
+                <span class="summary-title">Daily Summary</span>
+                <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="4" width="15" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 8h15M6.5 2.5v3M13.5 2.5v3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </div>
+              <ul class="summary-list">
+                <li><span class="dot"></span><span class="bar" style="width:88%"></span></li>
+                <li><span class="dot"></span><span class="bar" style="width:74%"></span></li>
+                <li><span class="dot"></span><span class="bar" style="width:60%"></span></li>
+              </ul>
             </div>
           </div>
-        </article>
-
-        <article class="feature-panel" id="privacy" data-reveal>
           <div class="feature-copy">
             <span class="feature-index">03</span>
             <h2 data-i18n="featureThreeTitle">ローカルで日次サマリーを生成</h2>
             <p data-i18n="featureThreeBody">
-              その日に集めた情報をローカルのAIが要約。思考のつながりを見つけ、学びを定着させます。
+              その日に集めた情報をAIがローカルで要約。思考のつながりを見つけ、学びを定着させます。
             </p>
-          </div>
-          <div class="feature-visual summary-visual" aria-hidden="true">
-            <div class="summary-card">
-              <div class="summary-title">Daily Summary</div>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
           </div>
         </article>
 
-        <article class="feature-panel" data-reveal>
+        <article class="feature-panel" id="how" data-reveal>
+          <div class="feature-visual menubar-visual" aria-hidden="true">
+            <div class="mac-menubar">
+              <span class="mb-app"><img src="./assets/tybrode-icon.png" width="16" height="16" alt=""></span>
+              <svg class="mb-ico" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><rect x="3" y="3.5" width="12" height="11" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="6.4" cy="9" r="1.5" fill="currentColor"/><rect x="9.4" y="6" width="4.6" height="1.4" rx="0.7" fill="currentColor"/><rect x="9.4" y="10.6" width="4.6" height="1.4" rx="0.7" fill="currentColor"/></svg>
+              <svg class="mb-ico" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2.5 13 6l-4 3.5V2.5l4 9L9 15V5.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+              <svg class="mb-ico" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2.5 8.6C4.8 6.2 7.7 4.9 9 4.9s4.2 1.3 6.5 3.7" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M5 11c1.4-1.4 2.9-2.1 4-2.1s2.6.7 4 2.1" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="9" cy="13.4" r="1.1" fill="currentColor"/></svg>
+              <svg class="mb-ico" width="26" height="18" viewBox="0 0 26 18" aria-hidden="true"><rect x="2" y="5.5" width="18" height="8" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="4" y="7.4" width="11" height="4.2" rx="1.2" fill="currentColor"/><rect x="21" y="7.6" width="1.8" height="3.8" rx="0.9" fill="currentColor"/></svg>
+            </div>
+            <div class="menu-popover">
+              <div class="menu-title">
+                <img src="./assets/tybrode-icon.png" width="22" height="22" alt="">
+                <span>Tybrode</span>
+              </div>
+              <div class="menu-sep"></div>
+              <div class="menu-row"><span>Quick Capture</span><kbd>⌘⇧K</kbd></div>
+              <div class="menu-row"><span>Open Dashboard</span><kbd>⌘O</kbd></div>
+              <div class="menu-row"><span>Pause Capture</span><kbd>⌘P</kbd></div>
+            </div>
+          </div>
           <div class="feature-copy">
             <span class="feature-index">04</span>
             <h2 data-i18n="featureFourTitle">メニューバーから、すぐに記録</h2>
@@ -145,49 +209,31 @@
               メニューバーからワンクリックでキャプチャ。思考を止めずに、自然に情報を積み重ねられます。
             </p>
           </div>
-          <div class="feature-visual menubar-visual" aria-hidden="true">
-            <div class="mac-menubar">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div class="menu-popover">
-              <div class="menu-title">
-                <img src="./assets/tybrode-icon.png" width="24" height="24" alt="">
-                <span>Tybrode</span>
-              </div>
-              <span>Quick Capture</span>
-              <span>Open Dashboard</span>
-              <span>Pause Capture</span>
-            </div>
-          </div>
         </article>
       </section>
 
       <section class="download-section" id="download" aria-labelledby="download-title">
         <div class="download-inner" data-reveal>
-          <img src="./assets/tybrode-icon.png" width="96" height="96" alt="">
+          <img src="./assets/tybrode-icon.png" width="84" height="84" alt="">
           <p class="section-kicker" data-i18n="downloadKicker">Latest DMG</p>
-          <h2 id="download-title" data-i18n="downloadTitle">Tybrode をMacで試す</h2>
-          <p data-i18n="downloadBody">
-            公開リリースは Tybrode-download から配布されます。インストール後、macOSの権限を許可してから allowlist と Capture を設定してください。
-          </p>
+          <h2 id="download-title" data-i18n="downloadTitle">Tybrode を Mac で試す</h2>
           <a class="button button-primary" href="https://github.com/keigo1110/Tybrode-download/releases/latest/download/Tybrode.dmg">
-            <span aria-hidden="true">↓</span>
+            <svg class="btn-icon" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2.5v9m0 0 3.4-3.4M9 11.5 5.6 8.1M3.5 14.5h11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span data-i18n="downloadButton">Download Latest DMG</span>
           </a>
           <div class="download-links">
             <a href="https://github.com/keigo1110/Tybrode-download/releases">Release page</a>
-            <a href="https://github.com/keigo1110/Tybrode-download">Public repo</a>
           </div>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <p data-i18n="footer">Tybrode is a local-only macOS prototype. Source development remains private.</p>
+      <a class="footer-brand" href="#top" aria-label="Tybrode home">
+        <img src="./assets/tybrode-icon.png" width="20" height="20" alt="">
+        <span>Tybrode</span>
+      </a>
+      <p class="footer-fine">© 2026 Tybrode</p>
     </footer>
 
     <script src="./site.js" defer></script>
